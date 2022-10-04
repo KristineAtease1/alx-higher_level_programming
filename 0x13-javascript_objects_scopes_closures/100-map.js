@@ -1,5 +1,4 @@
 #!/usr/bin/node
-const origin = require('./100-data').list;
-const newl = origin.map((e, idx) => e * idx);
-console.log(origin);
-console.log(newl);
+const list = require('./100-data.js').list;
+console.log(list);
+console.log(list.map((item, index) => item * index));
