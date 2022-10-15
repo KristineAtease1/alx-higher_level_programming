@@ -1,19 +1,33 @@
 #!/usr/bin/python3
-# Displays all cities of a given state from the
-# states table of the database hbtn_0e_4_usa.
-# Safe from SQL injections.
-# Usage: ./5-filter_cities.py <mysql username> \
-#                             <mysql password> \
-#                             <database name> \
-#                             <state name searched>
-import sys
-import MySQLdb
+"""lists all cities of that state"""
 
 if __name__ == "__main__":
-    db = MySQLdb.connect(user=sys.argv[1], passwd=sys.argv[2], db=sys.argv[3])
-    c = db.cursor()
-    c.execute("SELECT * FROM `cities` as `c` \
-                INNER JOIN `states` as `s` \
-                   ON `c`.`state_id` = `s`.`id` \
-                ORDER BY `c`.`id`")
-    print(", ".join([ct[2] for ct in c.fetchall() if ct[4] == sys.argv[4]]))
+
+    import MySQLdb
+    from sys import argv
+
+    db_name = argv[3]
+    u_pass = argv[2]
+    usr = argv[1]
+    st_nm = argv[4]
+
+    conn = MySQLdb.connect(
+        host="localhost",
+        port=3306,
+        user=usr,
+        passwd=u_pass,
+        db=db_name,
+        charset="utf8"
+    )
+    cur = conn.cursor()
+    cur.execute("SELECT cities.name FROM cities"
+                + " INNER JOIN states ON states.id = state_id"
+                + " WHERE states.name LIKE BINARY %s", (st_nm,))
+    rows = cur.fetchall()
+    length = 0
+    for row in rows:
+        print("{}".format(row[0],), end="")
+        if length < len(rows) - 1:
+            print(", ", end="")
+        length = length + 1
+    print()
