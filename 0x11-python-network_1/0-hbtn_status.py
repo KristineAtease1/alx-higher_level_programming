@@ -1,12 +1,9 @@
 #!/usr/bin/python3
 """ Script that fetches from a url """
+import urllib.request as ur
 
-import urllib.request as request
+with ur.urlopen('https://intranet.hbtn.io/status') as res:
+    res = res.read()
 
-if __name__ == "__main__":
-    with request.urlopen('https://intranet.hbtn.io/status') as r:
-        html = r.read()
-        print("Body response:")
-        print("\t- type: {}".format(type(html)))
-        print("\t- content: {}".format(html))
-        print("\t- utf8 content: {}".format(html.decode('utf-8')))
+print('Body response:\n\t- type: {}\n\t- content: {}'.format(type(res), res))
+print('\t- utf8 content: {}'.format(str(res, 'utf-8')))
