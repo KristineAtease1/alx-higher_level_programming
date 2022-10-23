@@ -1,9 +1,12 @@
 #!/usr/bin/python3
 """ Script that fetches from a url """
-import urllib.request as ur
+import urllib.request as req
 
-with ur.urlopen('https://intranet.hbtn.io/status') as res:
-    res = res.read()
 
-print('Body response:\n\t- type: {}\n\t- content: {}'.format(type(res), res))
-print('\t- utf8 content: {}'.format(str(res, 'utf-8')))
+fetched = req.Request('https://alx-intranet.hbtn.io/status')
+with req.urlopen(fetched) as ff:
+    content = ff.read()
+    print("Body response:")
+    print("    -type: {}".format(type(content)))
+    print("    -content: {}".format(content))
+    print("    -utf8 content: {}".format(content.decode('utf-8')))
