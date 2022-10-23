@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 """ Uses requests module to fetch URL status"""
-
 import requests
 
 if __name__ == '__main__':
